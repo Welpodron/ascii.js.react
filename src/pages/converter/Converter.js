@@ -1,8 +1,11 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
 
+import { v4 } from 'uuid';
+
 import Tabs from '../../components/Tabs/Tabs';
 
 import { ImgContext } from '../../context/Context';
+import { NotificationsContext } from '../../components/Notifications/Notifications';
 
 import { getConversion, methods, modes } from '../../utils/utils';
 
@@ -11,24 +14,36 @@ const Converter = (props) => {
   const uploader = useRef();
 
   const { img, setImg } = useContext(ImgContext);
+  const dispatchNotification = useContext(NotificationsContext);
 
   const copyToBuffer = () => {
-    const textarea = resulter.current;
-    textarea.focus();
-    textarea.select();
-    navigator.clipboard.writeText(textarea.value).then(() => {});
+    navigator.clipboard.writeText(result).then(() => {
+      dispatchNotification({
+        type: 'ADD_NOTIFICATION',
+        payload: {
+          id: v4(),
+          message: 'Результат успешно скопирован в буфер обмена'
+        }
+      });
+    });
   };
 
   const saveAsTXT = () => {
     const a = document.createElement('a');
-    const textarea = resulter.current;
-    const file = new Blob([textarea.value], {
+    const file = new Blob([result], {
       type: 'text/plain;charset=utf-8'
     });
     a.href = URL.createObjectURL(file);
     a.download = 'ASCII-JS-GENERATED-TXT';
     a.click();
     URL.revokeObjectURL(a.href);
+    dispatchNotification({
+      type: 'ADD_NOTIFICATION',
+      payload: {
+        id: v4(),
+        message: 'Результат успешно сохранен как .txt'
+      }
+    });
   };
 
   const getNewImg = () => {
@@ -121,11 +136,11 @@ const Converter = (props) => {
   return (
     result && (
       <>
-        <Tabs className='p-4 shadow-lg fixed bottom-4 -translate-x-1/2 left-1/2 flex space-x-6 rounded-md z-30 bg-white sm:flex-col sm:space-y-5 sm:-translate-x-0 sm:inset-auto sm:space-x-0 sm:-translate-y-1/2 sm:left-2 sm:top-1/2'>
+        <Tabs className='p-4 shadow-lg fixed bottom-4 -translate-x-1/2 left-1/2 flex space-x-6 rounded-md z-30 bg-white sm:flex-col sm:space-y-5 sm:-translate-x-0 sm:inset-auto sm:space-x-0 sm:-translate-y-1/2 sm:left-2 sm:top-1/2 dark:bg-gray-700'>
           <div className='relative'>
             <Tabs.ItemIndicator
               tooltip='Загрузить новое изображение'
-              className='grid items-center p-1 text-gray-400 hover:text-gray-700 focus-visible:text-gray-700 '
+              className='grid items-center p-1 text-gray-400 hover:text-gray-700 focus-visible:text-gray-700 dark:hover:text-gray-200 dark:focus-visible:text-gray-200'
               callback={getNewImg}
             >
               <svg
@@ -146,7 +161,7 @@ const Converter = (props) => {
           <div className='relative'>
             <Tabs.ItemIndicator
               tooltip='Скопировать в буфер обмена'
-              className='grid items-center p-1 text-gray-400 hover:text-gray-700 focus-visible:text-gray-700 '
+              className='grid items-center p-1 text-gray-400 hover:text-gray-700 focus-visible:text-gray-700 dark:hover:text-gray-200 dark:focus-visible:text-gray-200'
               callback={copyToBuffer}
             >
               <svg
@@ -167,7 +182,7 @@ const Converter = (props) => {
           <div className='relative'>
             <Tabs.ItemIndicator
               tooltip='Сохранить как .txt'
-              className='grid items-center p-1 text-gray-400 hover:text-gray-700 focus-visible:text-gray-700 '
+              className='grid items-center p-1 text-gray-400 hover:text-gray-700 focus-visible:text-gray-700 dark:hover:text-gray-200 dark:focus-visible:text-gray-200'
               callback={saveAsTXT}
             >
               <svg
@@ -193,7 +208,7 @@ const Converter = (props) => {
           <div className='relative'>
             <Tabs.ItemIndicator
               tooltip='Параметры конвертера'
-              className='grid items-center p-1 text-gray-400 hover:text-gray-700 focus-visible:text-gray-700 '
+              className='grid items-center p-1 text-gray-400 hover:text-gray-700 focus-visible:text-gray-700 dark:hover:text-gray-200 dark:focus-visible:text-gray-200'
               item='01'
             >
               <svg
@@ -211,7 +226,7 @@ const Converter = (props) => {
               </svg>
             </Tabs.ItemIndicator>
             <Tabs.Item
-              className='bg-white fixed p-2 z-40 shadow-lg rounded-md bottom-full left-0 sm:absolute sm:inset-auto sm:left-full sm:top-0'
+              className='bg-white fixed p-2 z-40 shadow-lg rounded-md bottom-full left-0 sm:absolute sm:inset-auto sm:left-full sm:top-0 dark:bg-gray-700 dark:text-white'
               item='01'
             >
               <form className='flex p-2 flex-col max-h-24 space-y-2 overflow-scroll sm:max-w-sm sm:flex-row sm:space-y-0 sm:space-x-2 md:max-w-lg lg:max-w-4xl'>
@@ -226,7 +241,7 @@ const Converter = (props) => {
                         [evt.target.name]: evt.target.value
                       }));
                     }}
-                    className='border-1 rounded p-1'
+                    className='border-1 rounded p-1 dark:bg-gray-800 dark:border-0'
                   >
                     {modes.map((mode) => (
                       <option key={mode.value} value={mode.value}>
@@ -242,7 +257,7 @@ const Converter = (props) => {
                   <input
                     type='text'
                     value={params.alphabet}
-                    className='w-44 border-1 rounded p-1'
+                    className='w-44 border-1 rounded p-1 dark:bg-gray-800 dark:border-0'
                     minLength='1'
                     name='alphabet'
                     onChange={(evt) => {
@@ -261,7 +276,7 @@ const Converter = (props) => {
                     type='number'
                     value={params.cellSize}
                     name='cellSize'
-                    className='w-16 border-1 rounded p-1'
+                    className='w-16 border-1 rounded p-1 dark:bg-gray-800 dark:border-0'
                     min='1'
                     onChange={(evt) => {
                       setParams((prev) => ({
@@ -277,7 +292,7 @@ const Converter = (props) => {
           <div className='relative'>
             <Tabs.ItemIndicator
               tooltip='Параметры конвертации'
-              className='grid items-center p-1 text-gray-400 hover:text-gray-700 focus-visible:text-gray-700 '
+              className='grid items-center p-1 text-gray-400 hover:text-gray-700 focus-visible:text-gray-700 dark:hover:text-gray-200 dark:focus-visible:text-gray-200'
               item='02'
             >
               <svg
@@ -295,7 +310,7 @@ const Converter = (props) => {
               </svg>
             </Tabs.ItemIndicator>
             <Tabs.Item
-              className='bg-white fixed p-2 z-40 shadow-lg rounded-md bottom-full left-0 sm:absolute sm:inset-auto sm:left-full sm:top-0'
+              className='bg-white fixed p-2 z-40 shadow-lg rounded-md bottom-full left-0 sm:absolute sm:inset-auto sm:left-full sm:top-0 dark:bg-gray-700 dark:text-white'
               item='02'
             >
               <form className='flex p-2 flex-col max-h-24 space-y-2 overflow-scroll sm:max-w-sm sm:flex-row sm:space-y-0 sm:space-x-2 md:max-w-lg lg:max-w-4xl'>
@@ -310,7 +325,7 @@ const Converter = (props) => {
                         [evt.target.name]: evt.target.value
                       }));
                     }}
-                    className='border-1 rounded p-1'
+                    className='border-1 rounded p-1 dark:bg-gray-800 dark:border-0'
                   >
                     {methods.map((method) => (
                       <option key={method.value} value={method.value}>
@@ -325,7 +340,7 @@ const Converter = (props) => {
                     type='number'
                     value={params.imgWidth}
                     name='imgWidth'
-                    className='w-16 border-1 rounded p-1'
+                    className='w-16 border-1 rounded p-1 dark:bg-gray-800 dark:border-0'
                     min='1'
                     onChange={(evt) => {
                       setParams((prev) => ({
@@ -341,7 +356,7 @@ const Converter = (props) => {
                     type='number'
                     value={params.imgHeight}
                     name='imgHeight'
-                    className='w-16 border-1 rounded p-1'
+                    className='w-16 border-1 rounded p-1 dark:bg-gray-800 dark:border-0'
                     min='1'
                     onChange={(evt) => {
                       setParams((prev) => ({
@@ -358,7 +373,7 @@ const Converter = (props) => {
                   <input
                     type='number'
                     value={params.optimizeA}
-                    className='w-16 border-1 rounded p-1'
+                    className='w-16 border-1 rounded p-1 dark:bg-gray-800 dark:border-0'
                     name='optimizeA'
                     min='1'
                     max='254'
@@ -378,7 +393,7 @@ const Converter = (props) => {
                     type='number'
                     value={params.optimizeRGB}
                     name='optimizeRGB'
-                    className='w-16 border-1 rounded p-1'
+                    className='w-16 border-1 rounded p-1 dark:bg-gray-800 dark:border-0'
                     min='1'
                     max='254'
                     onChange={(evt) => {
@@ -399,7 +414,7 @@ const Converter = (props) => {
             readOnly
             ref={resulter}
             value={result}
-            className='resulter w-screen h-screen fixed left-0 top-0 bottom-0 right-0 resize-none block leading-none text-xs text-center whitespace-pre'
+            className='resulter w-screen h-screen fixed left-0 top-0 bottom-0 right-0 resize-none block leading-none text-xs text-center whitespace-pre dark:bg-gray-800 dark:text-white'
           ></textarea>
           <input
             onChange={handleChange}

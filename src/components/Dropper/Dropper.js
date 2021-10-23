@@ -112,11 +112,11 @@ const Dropper = () => {
 
   return (
     dragging && (
-      <div className='bg-white w-screen h-screen fixed left-0 top-0 bottom-0 right-0 p-4 z-[100] opacity-95'>
+      <div className='bg-white w-screen h-screen fixed left-0 top-0 bottom-0 right-0 p-4 z-[1000] opacity-95 dark:bg-gray-700'>
         <div className='w-full h-full border-2 text-gray-300 border-gray-300 border-dashed rounded-md grid place-content-center pointer-events-none'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
-            className='h-12 w-12 pointer-events-none'
+            className='h-12 w-12 pointer-events-none animate-bounce'
             fill='none'
             viewBox='0 0 24 24'
             stroke='currentColor'

@@ -12,8 +12,21 @@
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>ASCII.JS.REACT</title>
+    <script>
+      if (
+        localStorage.theme === 'dark' ||
+        (!('theme' in localStorage) &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches)
+      ) {
+        document.documentElement.classList.add('dark');
+        localStorage.theme = 'dark';
+      } else {
+        document.documentElement.classList.remove('dark');
+        localStorage.theme = 'light';
+      }
+    </script>
   </head>
-  <body>
+  <body class="dark:bg-gray-800">
     <noscript
       >Вам нужно включить JavaScript для запуска этого приложения</noscript
     >

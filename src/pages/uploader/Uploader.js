@@ -135,10 +135,10 @@ const Uploader = () => {
         accept='.jpg, .jpeg, .png'
       />
       <label
-        className='fixed w-screen h-screen cursor-pointer grid place-content-center p-6 group'
+        className='fixed w-screen h-screen cursor-pointer grid place-content-center p-6 group '
         htmlFor='upload'
       >
-        <div className='flex justify-center p-6 rounded-md shadow-lg max-w-xl transition-all group-hover:scale-105'>
+        <div className='flex justify-center p-6 rounded-md shadow-lg max-w-xl transition-all group-hover:scale-105 dark:text-white'>
           <div className='space-y-1 text-center'>
             <p>
               <span className='text-purple-500'>Выберите изображение</span> или
