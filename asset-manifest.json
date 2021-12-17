@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/ascii.js.react/static/css/main.63155c5a.chunk.css",
-    "main.js": "/ascii.js.react/static/js/main.1b8b110d.chunk.js",
-    "main.js.map": "/ascii.js.react/static/js/main.1b8b110d.chunk.js.map",
+    "main.css": "/ascii.js.react/static/css/main.03a31367.chunk.css",
+    "main.js": "/ascii.js.react/static/js/main.bafffd7d.chunk.js",
+    "main.js.map": "/ascii.js.react/static/js/main.bafffd7d.chunk.js.map",
     "runtime-main.js": "/ascii.js.react/static/js/runtime-main.bc13f946.js",
     "runtime-main.js.map": "/ascii.js.react/static/js/runtime-main.bc13f946.js.map",
     "static/js/2.e7c1f49e.chunk.js": "/ascii.js.react/static/js/2.e7c1f49e.chunk.js",
     "static/js/2.e7c1f49e.chunk.js.map": "/ascii.js.react/static/js/2.e7c1f49e.chunk.js.map",
     "index.html": "/ascii.js.react/index.html",
-    "static/css/main.63155c5a.chunk.css.map": "/ascii.js.react/static/css/main.63155c5a.chunk.css.map",
+    "static/css/main.03a31367.chunk.css.map": "/ascii.js.react/static/css/main.03a31367.chunk.css.map",
     "static/js/2.e7c1f49e.chunk.js.LICENSE.txt": "/ascii.js.react/static/js/2.e7c1f49e.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.bc13f946.js",
     "static/js/2.e7c1f49e.chunk.js",
-    "static/css/main.63155c5a.chunk.css",
-    "static/js/main.1b8b110d.chunk.js"
+    "static/css/main.03a31367.chunk.css",
+    "static/js/main.bafffd7d.chunk.js"
   ]
 }
