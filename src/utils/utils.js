@@ -41,8 +41,8 @@ const getBrailleSymbol = (dots) => {
 const getPixels = (img, width = null, height = null) => {
   const canvas = document.createElement('canvas');
 
-  canvas.width = width || img.width;
-  canvas.height = height || img.height;
+  canvas.width = parseInt(width) || img.width;
+  canvas.height = parseInt(height) || img.height;
 
   const ctx = canvas.getContext('2d');
 
